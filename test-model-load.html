@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONNX Inference Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>ONNX Runtime Web Inference</h1>
+    <p>Inference results will be displayed below:</p>
+    <div id="results" class="output">
+        <p>Loading model and running inference...</p>
+    </div>
+
+    <script>
+        async function runInference() {
+            const resultsDiv = document.getElementById("results");
+
+            try {
+                // Load the ONNX model
+                const modelPath = 'dec-baseline-model-icassp2022_fixed.onnx';
+                const session = await ort.InferenceSession.create(modelPath);
+
+                // Prepare random input tensors matching the model's input shapes
+                const input = new Float32Array(1 * 1 * 322).fill(Math.random());
+                const h01 = new Float32Array(1 * 1 * 322).fill(Math.random());
+                const h02 = new Float32Array(1 * 1 * 322).fill(Math.random());
+
+                const feeds = {
+                    input: new ort.Tensor('float32', input, [1, 1, 322]),
+                    h01: new ort.Tensor('float32', h01, [1, 1, 322]),
+                    h02: new ort.Tensor('float32', h02, [1, 1, 322]),
+                };
+
+                // Measure inference time
+                const startTime = performance.now();
+                const results = await session.run(feeds);
+                const endTime = performance.now();
+                const inferenceTime = (endTime - startTime).toFixed(2); // In milliseconds
+
+                // Log outputs and inference time
+                console.log('output:', results['output'].data); // Shape: [1, 1, 161]
+                console.log('hn1:', results['hn1'].data); // Shape: [1, 1, 322]
+                console.log('hn2:', results['hn2'].data); // Shape: [1, 1, 322]
+
+                // Display results and inference time
+                resultsDiv.innerHTML = `
+                    <h3>Inference Results</h3>
+                    <p><strong>Inference Time:</strong> ${inferenceTime} ms</p>
+                    <p><strong>output:</strong> ${results['output'].data.slice(0, 10).join(", ")}...</p>
+                    <p><strong>hn1:</strong> ${results['hn1'].data.slice(0, 10).join(", ")}...</p>
+                    <p><strong>hn2:</strong> ${results['hn2'].data.slice(0, 10).join(", ")}...</p>
+                `;
+            } catch (err) {
+                // Display error
+                resultsDiv.innerHTML = `<p class="error">Error during inference: ${err.message}</p>`;
+            }
+        }
+
+        runInference().catch(err => console.error('Error:', err));
+    </script>
+</body>
+</html>
