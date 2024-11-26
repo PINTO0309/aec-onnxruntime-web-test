@@ -34,11 +34,11 @@ npm info fft.js versions
   '4.0.3', '4.0.4'
 ]
 
-npm install fft.js
+npm install fft.js@4.0.4
 
 npm list --depth=0
 git@ /home/xxxx/git
 └── fft.js@4.0.4
 
-npm install browserify
+npm install browserify@17.0.1
 ```
