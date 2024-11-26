@@ -1,6 +1,10 @@
 # aec-onnxruntime-web-test
 AEC (Acoustic Echo Cancellation) execution test environment by onnxruntime-web.
 
+## 0. AEC ONNX model
+
+![image](https://github.com/user-attachments/assets/5880393f-13fb-4187-a9dc-aa3f42a9040a)
+
 ## 1. Load the model and test inference with dummy data
 
 ```bash
