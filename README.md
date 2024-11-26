@@ -37,7 +37,7 @@ npm info fft.js versions
 ]
 
 npm install fft.js@4.0.4
-npm install browserify@17.0.1
+npm install -g browserify@17.0.1
 
 npm list --depth=0
 aec-onnxruntime-web-test@1.0.0 /home/xxxx/git/aec-onnxruntime-web-test
