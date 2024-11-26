@@ -39,4 +39,6 @@ npm install fft.js
 npm list --depth=0
 git@ /home/xxxx/git
 └── fft.js@4.0.4
+
+npm install browserify
 ```
