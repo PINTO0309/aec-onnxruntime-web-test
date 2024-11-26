@@ -43,5 +43,5 @@ npm list --depth=0
 aec-onnxruntime-web-test@1.0.0 /home/xxxx/git/aec-onnxruntime-web-test
 └── fft.js@4.0.4
 
-browserify node_modules/fft.js/lib/fft.js -o fft.js
+browserify node_modules/fft.js/lib/fft.js --standalone FFT -o fft.js
 ```
