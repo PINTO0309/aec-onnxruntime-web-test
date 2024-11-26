@@ -22,6 +22,8 @@ http://localhost:8888/test-model-load.html
 ```bash
 nvm use v18.16.1
 
+npm init -y
+
 npm info fft.js versions
 [
   '1.0.0', '1.0.1', '2.0.0',
